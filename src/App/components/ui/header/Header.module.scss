@@ -1,0 +1,23 @@
+.header {
+  padding: 0 10px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  &_link {
+    padding: 10px;
+    color: inherit;
+    transition: color 0.2s linear;
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+.active_link {
+  color: red;
+  text-decoration: underline;
+}
