@@ -21,7 +21,7 @@ class CardItem extends React.Component {
   }
   render(): React.ReactNode {
     return (
-      <div className={styles.card}>
+      <div className={styles.card} data-testid="card-item">
         <div>id: {this.item.id}</div>
         <div>Title: {this.item.title}</div>
         <div>Brand: {this.item.brand}</div>

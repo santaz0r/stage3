@@ -5,7 +5,7 @@ import AboutPage from './pages/aboutPage/AboutPage';
 import '../App.scss';
 import NotFoundPage from './pages/notFoundPage/NotFoundPage';
 
-const router = createBrowserRouter(
+export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
       <Route index element={<HomePage />} />

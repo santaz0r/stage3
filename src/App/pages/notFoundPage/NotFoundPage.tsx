@@ -2,7 +2,7 @@ import React from 'react';
 
 class NotFoundPage extends React.Component {
   render(): React.ReactNode {
-    return <p>Page not found</p>;
+    return <h2>Page not found</h2>;
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 class Footer extends React.Component {
   render(): React.ReactNode {
-    return <p>footer</p>;
+    return <footer data-testid="footer">footer</footer>;
   }
 }
 

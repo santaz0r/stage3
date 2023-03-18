@@ -19,6 +19,7 @@ class SearchBar extends React.Component<TProps> {
         placeholder="Search..."
         type="search"
         name="search"
+        data-testid="search-input"
       />
     );
   }

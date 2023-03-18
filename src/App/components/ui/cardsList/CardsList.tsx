@@ -41,7 +41,7 @@ class CardsList extends React.Component<TProps, TState> {
       return false;
     });
     return (
-      <div>
+      <div data-testid="cards-list">
         <SearchBar setSortBy={this.setSearch} sortBy={this.state.sortBy} />
         <div className={styles.cards__wrapper}>
           {filteredArr.map((i) => (

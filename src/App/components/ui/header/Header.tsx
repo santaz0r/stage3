@@ -8,7 +8,7 @@ const setActiveLink = ({ isActive }: { isActive: boolean }) =>
 class Header extends React.Component {
   render(): React.ReactNode {
     return (
-      <header className={styles.header}>
+      <header className={styles.header} data-testid="header">
         <nav>
           <ul className={styles.navigation}>
             <li className={styles.list_item}>

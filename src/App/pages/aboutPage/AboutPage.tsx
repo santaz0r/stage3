@@ -2,7 +2,7 @@ import React from 'react';
 
 class AboutPage extends React.Component {
   render(): React.ReactNode {
-    return <div>about us</div>;
+    return <p>about us</p>;
   }
 }
 
