@@ -21,6 +21,11 @@ class Header extends React.Component {
                 About us
               </NavLink>
             </li>
+            <li className={styles.list_item}>
+              <NavLink to="/404" className={setActiveLink}>
+                404
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </header>
