@@ -1,5 +1,15 @@
 .header {
   padding: 0 10px;
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__page {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 20px;
+  }
 }
 
 .navigation {
