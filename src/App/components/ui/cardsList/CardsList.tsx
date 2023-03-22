@@ -16,9 +16,6 @@ class CardsList extends React.Component<TProps, TState> {
   setSearch = (value: string) => {
     this.setState({ sortBy: value });
   };
-  componentWillUnmount(): void {
-    localStorage.setItem('rssSearchBy', this.state.sortBy);
-  }
 
   render(): React.ReactNode {
     const filteredArr = this.state.items.filter((product) => {
