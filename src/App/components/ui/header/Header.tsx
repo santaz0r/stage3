@@ -29,6 +29,11 @@ class Header extends React.Component {
                 </NavLink>
               </li>
               <li className={styles.list_item}>
+                <NavLink to="/form" className={setActiveLink} onClick={() => this.changeTitle('Form')}>
+                  Form
+                </NavLink>
+              </li>
+              <li className={styles.list_item}>
                 <NavLink to="/404" className={setActiveLink} onClick={() => this.changeTitle('404')}>
                   404
                 </NavLink>
