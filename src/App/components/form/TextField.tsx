@@ -4,7 +4,7 @@ type TProps = {
   label: string;
   type?: string;
   name: string;
-  value: string;
+
   error: string;
   onChange: () => void;
 };
@@ -35,8 +35,8 @@ class TextField extends React.Component<TProps, TState> {
             type={this.state.showPassword ? 'text' : this.props.type}
             data-id={this.props.name}
             data-name={this.props.name}
-            value={this.props.value}
             onChange={this.handleChange}
+            ref={this.props.reference}
           />
           {this.props.error && <div>{this.props.error}</div>}
           {this.props.type === 'password' && (

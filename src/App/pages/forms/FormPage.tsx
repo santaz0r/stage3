@@ -17,8 +17,9 @@ type TState = {
 };
 
 class FormPage extends React.Component<TProps, TState> {
-  kekw: React.RefObject<unknown>;
-  kekw2: React.RefObject<unknown>;
+  private kekw: React.RefObject<HTMLInputElement>;
+  private kekw2: React.RefObject<HTMLInputElement>;
+
   constructor(props: Readonly<TProps>) {
     super(props);
     this.kekw = React.createRef();
@@ -28,8 +29,8 @@ class FormPage extends React.Component<TProps, TState> {
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(this.kekw.current.value);
-    console.log(this.kekw2);
+    console.log(this.kekw.current, this.kekw.current.value);
+    console.log(this.kekw2.current, this.kekw2.current.value);
   };
 
   handleChange = (target: { name: string; value: string }) => {
@@ -47,14 +48,14 @@ class FormPage extends React.Component<TProps, TState> {
             name="name"
             onChange={this.handleChange}
             error={this.state.errors.name}
-            ref={this.kekw}
+            reference={this.kekw}
           />
           <TextField
             label="surname"
             name="surname"
             onChange={this.handleChange}
             error={this.state.errors.name}
-            ref={this.kekw2}
+            reference={this.kekw2}
           />
           <button type="submit">submit</button>
         </form>
