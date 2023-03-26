@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { RefObject } from 'react';
 
 type TProps = {
   label: string;
   type?: string;
   name: string;
-
+  reference: RefObject<HTMLInputElement>;
   error: string;
-  onChange: () => void;
 };
 
 type TState = { showPassword: boolean };
