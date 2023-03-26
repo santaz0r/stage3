@@ -27,7 +27,7 @@ class SwitchField extends React.Component<TProps> {
             {this.props.label}
           </label>
         )}
-        {this.props.error && <div className="invalid-feedback">{this.props.error}</div>}
+        {<div className="error">{this.props.error}</div>}
       </div>
     );
   }

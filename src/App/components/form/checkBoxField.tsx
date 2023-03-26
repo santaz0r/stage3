@@ -26,7 +26,7 @@ class CheckBoxField extends React.Component<TProps> {
         <label className="form-check-label" data-htmlfor={this.props.name}>
           {this.props.label}
         </label>
-        {this.props.error && <div className="invalid-feedback">{this.props.error}</div>}
+        {<div className="error">{this.props.error}</div>}
       </div>
     );
   }

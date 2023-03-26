@@ -17,15 +17,16 @@ class TextField extends React.Component<TProps, TState> {
     this.state = { showPassword: false };
   }
 
-  handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(target);
-  };
   toggleShowPassword = () => {
     this.setState((prevState) => {
       !prevState.showPassword;
     });
   };
   render(): React.ReactNode {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth().toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
     return (
       <div>
         <label data-htmlfor={this.props.name}>{this.props.label}</label>
@@ -34,10 +35,10 @@ class TextField extends React.Component<TProps, TState> {
             type={this.state.showPassword ? 'text' : this.props.type}
             data-id={this.props.name}
             data-name={this.props.name}
-            onChange={this.handleChange}
             ref={this.props.reference}
+            max={`${year}-${month}-${day}`}
           />
-          {this.props.error && <div>{this.props.error}</div>}
+          {<div className="error">{this.props.error}</div>}
           {this.props.type === 'password' && (
             <label htmlFor="chk">
               <input type="checkbox" id="chk" onChange={this.toggleShowPassword} checked={this.state.showPassword} />

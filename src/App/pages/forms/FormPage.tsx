@@ -4,30 +4,32 @@ import CheckBoxField from '../../components/form/checkBoxField';
 import SwitchField from '../../components/form/SwitchField';
 import styles from './Form.module.scss';
 import SelectField from '../../components/form/SelectField';
+import validator from '../../utils/validator';
+import FileInput from '../../components/form/FileInput';
+import FormCard from '../../components/ui/formCard/FormCard';
 
 const initialState = {
   name: '',
-  date: '',
+  birthday: '',
   select: '',
-  checkbox: false,
-  switcher: '',
+  passport: false,
+  gender: '',
   image: '',
-  id: 0,
+  id: '',
 };
 type TProps = { [key: string]: string };
 type TState = {
-  data: typeof initialState;
   errors: { [key: string]: string };
   cards: (typeof initialState)[];
 };
 
 const switchOptions = ['Male', 'Female'];
 const selectOptions = [
-  { label: 'poroda1', value: 'poroda1' },
-  { label: 'poroda2', value: 'poroda2' },
-  { label: 'poroda3', value: 'poroda3' },
-  { label: 'poroda4', value: 'poroda4' },
-  { label: 'poroda5', value: 'poroda5' },
+  { label: 'breed_1', value: 'breed_1' },
+  { label: 'breed_2', value: 'breed_2' },
+  { label: 'breed_3', value: 'breed_3' },
+  { label: 'breed_4', value: 'breed_4' },
+  { label: 'breed_5', value: 'breed_5' },
 ];
 
 class FormPage extends React.Component<TProps, TState> {
@@ -46,28 +48,79 @@ class FormPage extends React.Component<TProps, TState> {
     this.switchInput = React.createRef();
     this.selectInput = React.createRef();
     this.fileInput = React.createRef();
-    this.state = { data: initialState, errors: {}, cards: [] };
+    this.state = { errors: {}, cards: [] };
   }
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  validatorConfig = {
+    name: {
+      isRequired: {
+        message: "It's required field",
+      },
+      isStartCapitalLetter: {
+        message: 'Name must be begin with uppercase',
+      },
+    },
+    birthday: {
+      isRequired: {
+        message: "It's required field",
+      },
+    },
+    image: {
+      isRequired: {
+        message: "It's required field",
+      },
+    },
+    select: {
+      isRequired: {
+        message: "It's required field",
+      },
+    },
+    passport: {
+      isRequired: {
+        message: 'Your pet must have a passport',
+      },
+    },
+  };
+
+  clearForm = () => {
+    this.nameInput.current!.value = '';
+    this.fileInput.current!.value = '';
+    this.checkInput.current!.checked = true;
+    this.switchInput.current!.checked = false;
+    this.dateInput.current!.value = '';
+    this.selectInput.current!.value = '';
+  };
+
+  validate = async (data: { [key: string]: string }, cfg: typeof this.validatorConfig) => {
+    const validateErrors = await validator(data, cfg);
+    this.setState({ ...this.state, errors: validateErrors });
+
+    return Object.keys(validateErrors).length === 0;
+  };
+
+  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(this.nameInput.current, this.nameInput.current?.value);
-    console.log(this.dateInput.current, this.dateInput.current?.value);
-    console.log(this.checkInput.current, this.checkInput.current?.checked);
-    console.log(this.switchInput.current, this.switchInput.current?.checked);
-    console.log(this.selectInput.current, this.selectInput.current?.value);
 
     const newCardData: typeof initialState = {
-      id: this.state.cards.length + 1,
-      name: this.nameInput.current?.value || 'unnamed',
-      image: this.fileInput.current?.value || '',
-      checkbox: this.checkInput.current?.checked || false,
-      switcher: this.switchInput.current?.checked ? 'Male' : 'Female',
-      date: this.dateInput.current?.value || '',
+      id: (this.state.cards.length + 1).toString(),
+      name: this.nameInput.current?.value || '',
+      image: this.fileInput.current?.value ? URL.createObjectURL(this.fileInput.current?.files![0] as File) : '',
+      passport: this.checkInput.current?.checked || false,
+      gender: this.switchInput.current?.checked ? 'Female' : 'Male',
+      birthday: this.dateInput.current?.value || '',
       select: this.selectInput.current?.value || '',
     };
+    const nounRequiredParams = ({ id, gender, ...rest }: Pick<typeof initialState, 'id' | 'gender'>) => rest;
 
-    this.setState({ ...this.state, cards: [...this.state.cards, newCardData] });
+    const isValid = await this.validate(nounRequiredParams(newCardData), this.validatorConfig);
+
+    if (!isValid) {
+      this.setState({ ...this.state });
+    } else {
+      this.setState({ ...this.state, cards: [...this.state.cards, newCardData] });
+      alert('Saved');
+      this.clearForm();
+    }
   };
 
   render(): React.ReactNode {
@@ -83,7 +136,12 @@ class FormPage extends React.Component<TProps, TState> {
             error={this.state.errors.birthday}
             reference={this.dateInput}
           />
-          <CheckBoxField error={this.state.errors.check} label="passport" name="passport" reference={this.checkInput} />
+          <CheckBoxField
+            error={this.state.errors.passport}
+            label="passport"
+            name="passport"
+            reference={this.checkInput}
+          />
           <SwitchField
             options={switchOptions}
             error={this.state.errors.switch}
@@ -95,33 +153,30 @@ class FormPage extends React.Component<TProps, TState> {
             reference={this.selectInput}
             options={selectOptions}
             defaultOption="choose..."
-            disabledOption
+            disabledOption={false}
             error={this.state.errors.select}
-            label="poroda"
-            name="poroda"
+            label="breed"
+            name="breed"
           />
+          <FileInput error={this.state.errors.image} name="file" label="Photo:&nbsp;" reference={this.fileInput} />
 
-          <label>
-            Photo:&nbsp;
-            <input type="file" ref={this.fileInput} />
-          </label>
           <button type="submit">submit</button>
         </form>
+        <div>
+          <h3>Cards List</h3>
 
-        <h3>Cards List</h3>
-
-        {this.state.cards.length ? (
-          <div>
-            {this.state.cards.map((card) => (
-              <div key={card.id}>
-                <h3>{card.name}</h3>
-                <img src={card.image} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>Empty</p>
-        )}
+          {this.state.cards.length ? (
+            <div className={styles.cards_list}>
+              {this.state.cards.map((card) => (
+                <div key={card.id}>
+                  <FormCard {...card} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Empty</p>
+          )}
+        </div>
       </>
     );
   }

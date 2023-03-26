@@ -25,7 +25,7 @@ class SelectField extends React.Component<TProps> {
           {
             <>
               <select data-id={this.props.name} data-name={this.props.name} ref={this.props.reference}>
-                <option disabled={this.props.disabledOption} value="DEFAULT" key="DEFAULT">
+                <option disabled={this.props.disabledOption} value="" key="DEFAULT">
                   {this.props.defaultOption}
                 </option>
                 {this.props.options &&
@@ -39,7 +39,7 @@ class SelectField extends React.Component<TProps> {
             </>
           }
         </div>
-        {this.props.error && <div>{this.props.error}</div>}
+        {<div className="error">{this.props.error}</div>}
       </div>
     );
   }
