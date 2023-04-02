@@ -72,4 +72,8 @@ button:focus-visible {
   color: red;
   font-size: 14px;
   height: 30px;
+  text-transform: lowercase;
+  &::first-letter {
+    text-transform: capitalize;
+  }
 }

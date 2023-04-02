@@ -1,26 +1,29 @@
-import React, { RefObject } from 'react';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 type TProps = {
   label: string;
-  reference: RefObject<HTMLInputElement>;
-  error: string;
-  name: string;
+  error: FieldErrors<FieldValues>;
+  register: UseFormRegister<FieldValues>;
+  field: string;
 };
 
-class FileInput extends React.Component<TProps> {
-  render(): React.ReactNode {
-    return (
+function FileInput({ label, error, register, field }: TProps) {
+  return (
+    <div data-testid="file-input">
       <div>
-        <div>
-          <label>
-            {this.props.label}
-            <input type="file" ref={this.props.reference} />
-          </label>
-          {<div className="error">{this.props.error}</div>}
-        </div>
+        <label>
+          {label}
+          <input
+            type="file"
+            {...register(field, {
+              required: 'Your need to upload pet picture',
+            })}
+          />
+        </label>
+        {<div className="error">{error[field]?.message?.toString()}</div>}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default FileInput;

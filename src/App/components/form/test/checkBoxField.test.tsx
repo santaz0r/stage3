@@ -1,13 +1,24 @@
 import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { useForm } from 'react-hook-form';
 
 import CheckBoxField from '../checkBoxField';
-import React from 'react';
-const ref = React.createRef<HTMLInputElement>();
-describe('FormPage', () => {
-  it('Render FormPage', () => {
-    render(<CheckBoxField error={''} label="passport" name="passport" reference={ref} />);
+
+const Form = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+  return <CheckBoxField label="passport" field="passport" register={register} error={errors} />;
+};
+
+describe('Checkbox', () => {
+  it('Render Checkbox', () => {
+    render(<Form />);
     expect(screen.getByText('passport')).toBeInTheDocument();
     expect(screen.getByRole('checkbox')).toBeInTheDocument();
+    const passport = screen.getByLabelText('passport');
+    fireEvent.change(passport, { target: { checked: true } });
+    expect(passport).toBeChecked();
   });
 });
