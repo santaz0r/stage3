@@ -6,7 +6,7 @@ import testData from '../../../../data/data.json';
 describe('Card component', () => {
   it('Render Item', () => {
     const data = [...testData];
-    render(<CardItem {...data[0]} />);
+    render(<CardItem data={data[0]} />);
     expect(screen.getByTestId('card-item')).toBeInTheDocument();
   });
 });
