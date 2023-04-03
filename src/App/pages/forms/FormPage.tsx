@@ -57,7 +57,7 @@ function FormPage() {
       birthday: data.birthday,
       breed: data.breed,
     };
-
+    alert('Data updated');
     setCards((prev) => [...prev, newCardData]);
     reset();
   });
