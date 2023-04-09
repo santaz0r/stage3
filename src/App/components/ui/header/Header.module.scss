@@ -1,0 +1,33 @@
+.header {
+  padding: 0 10px;
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__page {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  &_link {
+    padding: 10px;
+    color: inherit;
+    transition: color 0.2s linear;
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+.active_link {
+  color: red;
+  text-decoration: underline;
+}
