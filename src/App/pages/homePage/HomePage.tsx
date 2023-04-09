@@ -36,13 +36,17 @@ function HomePage() {
   }, []);
 
   if (isLoading) {
-    return <div className={styles.spinner}>Loading</div>;
+    return (
+      <div data-testid="spinner" className={styles.spinner}>
+        Loading
+      </div>
+    );
   }
   return (
     <>
       <h2>Home page</h2>
       <SearchBar setSortBy={handleSearch} sortBy={sortBy} getData={getCharacters} />
-      {!error ? characters && <CardsList data={characters} /> : <h1>{error}</h1>}
+      {!error ? characters && <CardsList data={characters} /> : <h1 data-testid="error">{error}</h1>}
     </>
   );
 }

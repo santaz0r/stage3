@@ -11,7 +11,6 @@ function CardItem({ data }: TProps) {
   const [isModalActive, setIsModalActive] = useState(false);
 
   const handleClick = () => {
-    console.log('click');
     setIsModalActive(true);
   };
   return (
@@ -25,7 +24,7 @@ function CardItem({ data }: TProps) {
         <div>Gender: {data.gender}</div>
         <div>Status: {data.status}</div>
         <div>Species: {data.species}</div>
-        {data.type && <div>Type: {data.type}</div>}
+        {data.type && <div data-testid="type">Type: {data.type}</div>}
         <button className={styles.card__btn} onClick={handleClick}>
           More detalis
         </button>

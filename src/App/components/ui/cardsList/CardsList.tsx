@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import CardItem from '../card/Card';
 import styles from './CardsList.module.scss';
-import SearchBar from '../searchBar/SearchBar';
 import { TCharacters } from '../../../types/types';
 
 type TProps = {

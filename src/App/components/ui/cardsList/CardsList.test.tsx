@@ -1,21 +1,15 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import { describe, expect, it } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import dataTst from '../../../../data/data';
 
 import CardsList from './CardsList';
 
 describe('CardsList component', () => {
   it('Render List', () => {
-    render(<CardsList />);
+    render(<CardsList data={dataTst} />);
     expect(screen.getByTestId('cards-list')).toBeInTheDocument();
-    expect(screen.getByTestId('search-input')).toBeInTheDocument();
-    expect(screen.getAllByTestId('card-item')).toHaveLength(12);
-  });
-  it('typing', () => {
-    render(<CardsList />);
-    expect(screen.queryByDisplayValue('smth')).toBeNull();
-    fireEvent.change(screen.getByTestId('search-input'), {
-      target: { value: 'test' },
-    });
-    expect(screen.queryByDisplayValue(/test/)).toBeInTheDocument();
+    expect(screen.getAllByTestId('card-item')).toHaveLength(3);
   });
 });
