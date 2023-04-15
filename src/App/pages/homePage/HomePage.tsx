@@ -1,41 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useGetCharactersQuery } from '../../store';
 import CardsList from '../../components/ui/cardsList/CardsList';
-import characterService from '../../services/CharacterService';
-import { TCharacters } from '../../types/types';
 import SearchBar from '../../components/ui/searchBar/SearchBar';
-import axios from 'axios';
-
 import styles from './HomePage.module.scss';
+import { useAppSelector } from '../../../hooks';
+import { getSearch } from '../../store/search';
 
 function HomePage() {
-  const [characters, setCharacters] = useState<TCharacters['results'] | null>(null);
-  const [error, setError] = useState<string>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [sortBy, setSortBy] = useState(localStorage.getItem('rssSearch') || '');
+  const search = useAppSelector(getSearch());
 
-  const handleSearch = (value: string) => {
-    setSortBy(value);
-  };
+  const { data = [], isFetching, isError } = useGetCharactersQuery(search);
 
-  const getCharacters = async (value = '') => {
-    setIsLoading(true);
-    try {
-      setError('');
-      const dataCharacters = await characterService.get(value);
-      setCharacters(dataCharacters);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const message: string = error.response?.data.error;
-        setError(message);
-      }
-    }
-    setIsLoading(false);
-  };
-  useEffect(() => {
-    getCharacters(localStorage.getItem('rssSearch') || '');
-  }, []);
-
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div data-testid="spinner" className={styles.spinner}>
         Loading
@@ -45,8 +21,8 @@ function HomePage() {
   return (
     <>
       <h2>Home page</h2>
-      <SearchBar setSortBy={handleSearch} sortBy={sortBy} getData={getCharacters} />
-      {!error ? characters && <CardsList data={characters} /> : <h1 data-testid="error">{error}</h1>}
+      <SearchBar />
+      {!isError ? data && <CardsList data={data.results} /> : <h1 data-testid="error">There is nothing here</h1>}
     </>
   );
 }
