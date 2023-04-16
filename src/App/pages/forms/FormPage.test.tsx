@@ -1,10 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import FormPage from './FormPage';
+import { store } from '../../store';
+import { Provider } from 'react-redux';
 
 describe('FormPage', () => {
   it('Render FormPage', async () => {
-    render(<FormPage />);
+    render(
+      <Provider store={store}>
+        <FormPage />
+      </Provider>
+    );
     expect(screen.getByText(/Form/i)).toBeInTheDocument();
     expect(screen.getByTestId('form-page')).toBeInTheDocument();
 

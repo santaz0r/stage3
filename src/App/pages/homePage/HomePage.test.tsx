@@ -6,6 +6,8 @@ import data from '../../../data/data.json';
 import HomePage from './HomePage';
 import { useState } from 'react';
 import CardsList from '../../components/ui/cardsList/CardsList';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 const TestingComp = () => {
   const [characters] = useState(data);
@@ -25,7 +27,11 @@ const TestingComp = () => {
 
 describe('HomePage', () => {
   it('Render without data', () => {
-    render(<HomePage />);
+    render(
+      <Provider store={store}>
+        <HomePage />
+      </Provider>
+    );
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
   });
   it('Render with data', () => {
