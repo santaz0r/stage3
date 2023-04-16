@@ -9,16 +9,7 @@ import FormCard from '../../components/ui/formCard/FormCard';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createCard, getAllCards } from '../../store';
 import { toast } from 'react-toastify';
-
-type TFormData = {
-  name: string;
-  birthday: string;
-  breed: string;
-  passport: boolean;
-  gender: string;
-  file: string;
-  id: string;
-};
+import { TCard } from '../../types/types';
 
 const switchOptions = ['Male', 'Female'];
 const selectOptions = [
@@ -42,7 +33,7 @@ function FormPage() {
   const cardsForm = useAppSelector(getAllCards());
 
   const onSubmit = handleSubmit((data) => {
-    const newCardData: TFormData = {
+    const newCardData: TCard = {
       id: (cardsForm.length + 1).toString(),
       name: data.name,
       file: data.file[0] ? URL.createObjectURL(data.file[0] as File) : '',
