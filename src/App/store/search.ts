@@ -20,7 +20,7 @@ const searchSlice = createSlice({
 });
 
 const { actions, reducer: searchReducer } = searchSlice;
-const { changedSearch } = actions;
+export const { changedSearch } = actions;
 
 export const changeSearch = (payload: string) => (dispatch: AppDispatch) => {
   dispatch(changedSearch(payload));

@@ -21,7 +21,7 @@ const formSlice = createSlice({
 });
 
 const { actions, reducer: formReducer } = formSlice;
-const { createdCard } = actions;
+export const { createdCard } = actions;
 
 export const createCard = (payload: TCard) => (dispatch: AppDispatch) => {
   dispatch(createdCard(payload));
