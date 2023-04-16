@@ -1,10 +1,12 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { charactersApi } from './charactersAPI';
 import searchReducer from './search';
+import formReducer from './form';
 
 const rootReducer = combineReducers({
   [charactersApi.reducerPath]: charactersApi.reducer,
   search: searchReducer,
+  form: formReducer,
 });
 
 export const store = configureStore({

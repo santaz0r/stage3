@@ -1,16 +1,8 @@
-import React from 'react';
 import styles from './FormCard.module.scss';
+import { TCard } from '../../../types/types';
 
 type TProps = {
-  data: {
-    name: string;
-    birthday: string;
-    breed: string;
-    passport: boolean;
-    gender: string;
-    file: string;
-    id: string;
-  };
+  data: TCard;
 };
 function FormCard({ data }: TProps) {
   return (

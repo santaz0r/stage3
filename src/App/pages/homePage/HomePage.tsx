@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { useGetCharactersQuery } from '../../store';
 import CardsList from '../../components/ui/cardsList/CardsList';
 import SearchBar from '../../components/ui/searchBar/SearchBar';
 import styles from './HomePage.module.scss';
 import { useAppSelector } from '../../../hooks';
-import { getSearch } from '../../store/search';
+import { getSearch } from '../../store';
 
 function HomePage() {
   const search = useAppSelector(getSearch());

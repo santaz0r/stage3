@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import TextField from '../../components/form/TextField';
 import CheckBoxField from '../../components/form/checkBoxField';
@@ -7,16 +6,9 @@ import styles from './Form.module.scss';
 import SelectField from '../../components/form/SelectField';
 import FileInput from '../../components/form/FileInput';
 import FormCard from '../../components/ui/formCard/FormCard';
-
-const initialState = {
-  name: '',
-  birthday: '',
-  breed: '',
-  passport: false,
-  gender: '',
-  file: '',
-  id: '',
-};
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { createCard, getAllCards } from '../../store';
+import { toast } from 'react-toastify';
 
 type TFormData = {
   name: string;
@@ -45,11 +37,13 @@ function FormPage() {
     reset,
   } = useForm();
 
-  const [cards, setCards] = useState<(typeof initialState)[]>([]);
+  const dispatch = useAppDispatch();
+
+  const cardsForm = useAppSelector(getAllCards());
 
   const onSubmit = handleSubmit((data) => {
     const newCardData: TFormData = {
-      id: (cards.length + 1).toString(),
+      id: (cardsForm.length + 1).toString(),
       name: data.name,
       file: data.file[0] ? URL.createObjectURL(data.file[0] as File) : '',
       passport: data.passport,
@@ -57,8 +51,9 @@ function FormPage() {
       birthday: data.birthday,
       breed: data.breed,
     };
-    alert('Data updated');
-    setCards((prev) => [...prev, newCardData]);
+
+    dispatch(createCard(newCardData));
+    toast.success('Pet has been added');
     reset();
   });
 
@@ -86,9 +81,9 @@ function FormPage() {
       <div>
         <h3>Cards List</h3>
 
-        {cards.length ? (
+        {cardsForm.length ? (
           <div className={styles.cards_list} data-testid="not-empty">
-            {cards.map((card) => (
+            {cardsForm.map((card) => (
               <div key={card.id}>
                 <FormCard data={card} />
               </div>
